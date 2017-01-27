@@ -18,9 +18,9 @@ namespace TinyUnit {
 /** Set of some tests. Like a test suite. */
 class Test {
 private:
-    int count;    ///< Number of done tests.
-    int success;  ///< Number of successful tests.
-    std::ostream& out;
+    int count;          ///< Number of done tests.
+    int success;        ///< Number of successful tests.
+    std::ostream& out;  ///< Output stream for write message.
 
 
     /** One of test case.
@@ -74,7 +74,7 @@ private:
          * @param parent  Reference to parent Test.
          * @param name    Name of this Case.
          */
-        Case(Test& parent, std::string name) : parent(parent), name(name + std::string(std::max((unsigned long)0, 60 - name.length()), ' ')) {
+        Case(Test& parent, std::string name) : parent(parent), name(name + std::string(std::max(0ul, 60ul - name.length()), ' ')) {
             parent.out << this->name << "\e[37m[...]\e[0m" << std::flush;
         }
 
@@ -157,10 +157,18 @@ private:
 
 
 public:
+    /** Initialize
+     *
+     * Output for stdout.
+     */
     Test() : out(std::cout) {
         count = success = 0;
     }
 
+    /** Initialize
+     *
+     * @param out  Output stream for write message.
+     */
     Test(std::ostream& out) : out(out) {
         count = success = 0;
     }
